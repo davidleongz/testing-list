@@ -13,10 +13,22 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter'
+
+	implementation 'org.apache.commons:commons-lang3:3.8.1'
+
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+
+	dependencies {
+		compileOnly 'org.projectlombok:lombok:1.18.12'
+		annotationProcessor 'org.projectlombok:lombok:1.18.12'
+	}
+
 }
 
 test {
