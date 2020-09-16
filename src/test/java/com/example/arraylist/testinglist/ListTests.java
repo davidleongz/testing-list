@@ -40,23 +40,24 @@ public class ListTests {
 	@Test
 	public void getValuesNotExistFromArrayList() {
 
-		final String jsonWith33Orders = getJsonFromFile.extractJsonFromFile("json", "jsonWith33Orders.json");
-		final String jsonWith35Orders = getJsonFromFile.extractJsonFromFile("json", "jsonWith35Orders.json");
+		final String jsonSmallList = getJsonFromFile.extractJsonFromFile("json", "jsonSmallList.json");
+		final String jsonLargeList = getJsonFromFile.extractJsonFromFile("json", "jsonLargeList.json");
 
-		final OrderListDTO orderListWith33Orders = (OrderListDTO) jsonUtils.jsonStringToDto(jsonWith33Orders, OrderListDTO.class);
-		final OrderListDTO orderListWith35Orders = (OrderListDTO) jsonUtils.jsonStringToDto(jsonWith35Orders, OrderListDTO.class);
+		final OrderListDTO orderSmallList = (OrderListDTO) jsonUtils.jsonStringToDto(jsonSmallList, OrderListDTO.class);
+		final OrderListDTO orderLargeList = (OrderListDTO) jsonUtils.jsonStringToDto(jsonLargeList, OrderListDTO.class);
 
 		final List<String> ordersNotRepeated = new ArrayList<String>();
 
-		if (!CollectionUtils.isEmpty(orderListWith33Orders.getOrderList()) && !CollectionUtils.isEmpty(orderListWith35Orders.getOrderList())) {
+		if (!CollectionUtils.isEmpty(orderSmallList.getOrderList()) && !CollectionUtils.isEmpty(orderLargeList.getOrderList())) {
 
-			for (final String order : orderListWith35Orders.getOrderList()) {
+			for (final String order : orderLargeList.getOrderList()) {
 
-				if (!orderListWith33Orders.getOrderList().contains(order)) {
+				if (!orderSmallList.getOrderList().contains(order)) {
 					ordersNotRepeated.add(order);
 				}
 			}
 
+			LOGGER.info("Number of orders: {}", ordersNotRepeated.size());
 			LOGGER.info(ordersNotRepeated.toString());
 		}
 
