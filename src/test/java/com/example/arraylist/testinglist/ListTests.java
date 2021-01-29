@@ -14,12 +14,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.CollectionUtils;
 
 import com.example.arraylist.dto.OrderListDTO;
+import com.example.utils.JsonTools;
 
 
 
@@ -27,24 +27,13 @@ import com.example.arraylist.dto.OrderListDTO;
 @SpringBootTest
 public class ListTests {
 
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(ListTests.class);
 
-	@Autowired
-	GetJsonFromFile getJsonFromFile;
-
-	@Autowired
-	JsonUtils jsonUtils;
-
-	@SuppressWarnings("static-access")
 	@Test
 	public void getValuesNotExistFromArrayList() {
 
-		final String jsonSmallList = getJsonFromFile.extractJsonFromFile("json", "jsonSmallList.json");
-		final String jsonLargeList = getJsonFromFile.extractJsonFromFile("json", "jsonLargeList.json");
-
-		final OrderListDTO orderSmallList = (OrderListDTO) jsonUtils.jsonStringToDto(jsonSmallList, OrderListDTO.class);
-		final OrderListDTO orderLargeList = (OrderListDTO) jsonUtils.jsonStringToDto(jsonLargeList, OrderListDTO.class);
+		OrderListDTO orderSmallList = JsonTools.convertJsonFileToObjecDto("json", "jsonSmallList.json", OrderListDTO.class);
+		OrderListDTO orderLargeList = JsonTools.convertJsonFileToObjecDto("json", "jsonLargeList.json", OrderListDTO.class);
 
 		final List<String> ordersNotRepeated = new ArrayList<String>();
 
@@ -61,24 +50,7 @@ public class ListTests {
 			LOGGER.info(ordersNotRepeated.toString());
 		}
 
-		assertEquals(ordersNotRepeated.size(), 2);
-	}
-
-	public String getJsonFromFile(final String jsonName) {
-
-		String jsonFile = null;
-
-		try {
-
-			final String path = new File(".").getCanonicalPath();
-
-			jsonFile = new String(Files.readAllBytes(Paths.get(path + "/src/test/resources/jsonCancellation/" + jsonName)));
-
-		} catch (final IOException e) {
-			LOGGER.error("ERROR: ", e);
-		}
-
-		return jsonFile;
+		assertEquals(ordersNotRepeated.size(), 14);
 	}
 
 }
